@@ -7,7 +7,9 @@
 # include <fcntl.h>
 # include <math.h>
 # include "libft/libft.h"
+# include "gnl/get_next_line.h"
 
+# define ERR_INV "Invalid identifier or line found in file"
 # define ERR_USAGE "Usage: ./cub3D <map_path.cub>"
 # define ERR_EXT   "Invalid file extension. Must be .cub"
 # define ERR_FILE  "Could not open file"
@@ -30,7 +32,9 @@ typedef struct s_map
 
 void    init_map(t_map *map);
 void    check_args(int argc, char **argv);
-void    exit_error(char *msg);
+void    parse_file(char *file_path, t_map *map);
+void    exit_error(t_map *map, char *msg);
+void    free_map(t_map *map);
 int     check_extension(char *file);
 
 #endif

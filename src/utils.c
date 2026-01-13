@@ -1,13 +1,5 @@
 #include "../cub3d.h"
 
-void    exit_error(char *msg)
-{
-    ft_putstr_fd("Error\n", 2);
-    ft_putstr_fd(msg, 2);
-    ft_putstr_fd("\n", 2);
-    exit(1);
-}
-
 int     check_extension(char *file)
 {
     size_t  len;
@@ -25,10 +17,10 @@ void    check_args(int argc, char **argv)
     int fd;
 
     if (argc != 2)
-        exit_error(ERR_USAGE);
+        exit_error(NULL, ERR_USAGE);
 
     if (!check_extension(argv[1]))
-        exit_error(ERR_EXT);
+        exit_error(NULL, ERR_EXT);
 
     fd = open(argv[1], O_RDONLY);
     if (fd < 0)

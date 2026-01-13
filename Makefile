@@ -1,6 +1,6 @@
 NAME=cub3d
 
-SRCS= cub3d.c src/init.c src/utils.c
+SRCS= cub3d.c src/init.c src/utils.c gnl/get_next_line.c src/parse.c src/clean.c
 
 CFLAGS=-Wall -Wextra -Werror 
 
@@ -20,5 +20,8 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
+
+run: all
+	./$(NAME) map/map.cub
 
 .PHONY: all clean fclean re
