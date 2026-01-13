@@ -1,6 +1,6 @@
 NAME=cub3d
 
-SRCS= 
+SRCS= cub3d.c src/init.c src/utils.c
 
 CFLAGS=-Wall -Wextra -Werror 
 
