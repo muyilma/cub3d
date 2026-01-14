@@ -1,5 +1,13 @@
 #include "../cub3d.h"
 
+static void free_double_arr(char **arr)
+{
+    int i = 0;
+    while (arr[i])
+        free(arr[i++]);
+    free(arr);
+}
+
 void    free_map(t_map *map)
 {
     if (!map)
@@ -12,6 +20,8 @@ void    free_map(t_map *map)
         free(map->we_path);
     if (map->ea_path)
         free(map->ea_path);
+    if (map->map)
+        free_double_arr(map->map);
 }
 
 void    exit_error(t_map *map, char *msg)

@@ -87,4 +87,5 @@ void	parse_file(char *file_path, t_map *map)
 		free(line);
 	}
 	close(fd);
+	read_map(file_path, map);
 }
