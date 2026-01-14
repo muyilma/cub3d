@@ -11,6 +11,8 @@ int main(int argc, char **argv)
     printf("SO: %s\n", data.so_path);
     printf("WE: %s\n", data.we_path);
     printf("EA: %s\n", data.ea_path);
+    printf("color: %d\n", data.floor_color);
+    printf("color: %d\n", data.ceil_color);
 
     free_map(&data);
     return (0);

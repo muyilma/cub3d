@@ -36,5 +36,6 @@ void    parse_file(char *file_path, t_map *map);
 void    exit_error(t_map *map, char *msg);
 void    free_map(t_map *map);
 int     check_extension(char *file);
+int     parse_rgb(char *line);
 
 #endif

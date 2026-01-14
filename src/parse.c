@@ -26,15 +26,18 @@ static void	parse_path(char *line, t_map *map, char **path_ptr)
 
 static void	parse_color_line(char *line, t_map *map, int *color_ptr)
 {
-    // (void)line; // Kullanılmayan değişken uyarısını susturmak için
+	char	*ptr;
+
 	if (*color_ptr != -1)
 		exit_error(map, "Error\nDuplicate color identifier");
+	
+	ptr = line + 1;
+	ptr = skip_spaces(ptr);
 
-    // AŞAMA 2 İÇİN GEÇİCİ KOD (Dummy Value)
-    // parse_rgb fonksiyonunu henüz yazmadık, o yüzden buraya sahte değer atıyoruz.
-    // İleride burayı düzelteceğiz.
-    (void)line; 
-	*color_ptr = 0xFFFFFF; 
+	if (!*ptr)
+		exit_error(map, "Error\nMissing color values");
+
+	*color_ptr = parse_rgb(ptr);
 }
 
 static int	parse_line(char *line, t_map *map)
