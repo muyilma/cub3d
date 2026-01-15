@@ -1,1 +1,5 @@
 minilibx-linux
+*.o
+*.a
+cub3d
+bu doysayı sil

@@ -22,6 +22,10 @@ fclean: clean
 re: fclean all
 
 run: all
+	clear
 	./$(NAME) map/map.cub
+
+leak: all
+	valgrind --leak-check=full --show-leak-kinds=all ./cub3d map/map.cub 
 
 .PHONY: all clean fclean re
