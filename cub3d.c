@@ -6,6 +6,7 @@ int main(int argc, char **argv)
     check_args(argc, argv);
     init_map(&data);
     parse_file(argv[1], &data);
+    check_map_validity(&data);
 
     printf("NO: %s\n", data.no_path);
     printf("SO: %s\n", data.so_path);

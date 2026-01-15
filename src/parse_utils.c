@@ -10,7 +10,7 @@ static int	get_arr_len(char **arr)
 	return (i);
 }
 
-static void	free_arr(char **arr)
+void	free_arr(char **arr)
 {
 	int	i;
 

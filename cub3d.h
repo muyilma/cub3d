@@ -38,5 +38,6 @@ void    free_map(t_map *map);
 int     check_extension(char *file);
 int     parse_rgb(char *line);
 void    read_map(char *file_path, t_map *map);
-
+void    check_map_validity(t_map *map);
+void	free_arr(char **arr);
 #endif
