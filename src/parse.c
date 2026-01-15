@@ -14,13 +14,15 @@ static void	parse_path(char *line, t_map *map, char **path_ptr)
 	if (*path_ptr != NULL)
 		exit_error(map, "Error\nDuplicate texture identifier");
 	
-    line += 2;
+	line += 2;
 	line = skip_spaces(line);
 	trimmed = ft_strtrim(line, " \n");
 	if (!trimmed || ft_strlen(trimmed) == 0)
-    {
+	{
+		if (trimmed)
+			free(trimmed);
 		exit_error(map, "Error\nInvalid texture path");
-    }
+	}
 	*path_ptr = trimmed;
 }
 
@@ -36,8 +38,7 @@ static void	parse_color_line(char *line, t_map *map, int *color_ptr)
 
 	if (!*ptr)
 		exit_error(map, "Error\nMissing color values");
-
-	*color_ptr = parse_rgb(ptr);
+	*color_ptr = parse_rgb(ptr, map);
 }
 
 static int	parse_line(char *line, t_map *map)
@@ -62,7 +63,10 @@ static int	parse_line(char *line, t_map *map)
 	else if (*ptr == '1' || *ptr == '0')
 		return (1);
 	else
+	{
+		free(line);
 		exit_error(map, "Error\nInvalid identifier");
+	}
 	return (0);
 }
 
@@ -87,5 +91,10 @@ void	parse_file(char *file_path, t_map *map)
 		free(line);
 	}
 	close(fd);
+	if (!map->no_path || !map->so_path || !map->we_path || !map->ea_path
+		|| map->floor_color == -1 || map->ceil_color == -1)
+	{
+		exit_error(map, "Missing texture or color identifiers");
+	}
 	read_map(file_path, map);
 }

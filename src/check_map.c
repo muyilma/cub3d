@@ -5,7 +5,7 @@ static char	**copy_map(t_map *map)
 	char	**copy;
 	int		i;
 
-	copy = malloc(sizeof(char *) * (map->height + 1));
+	copy = ft_calloc(map->height + 1, sizeof(char *));
 	if (!copy)
 		return (NULL);
 	i = 0;

@@ -1,6 +1,6 @@
 NAME=cub3d
 
-SRCS= cub3d.c src/init.c src/utils.c gnl/get_next_line.c src/parse.c src/clean.c src/parse_utils.c src/map_read.c src/check_map.c
+SRCS= cub3d.c src/utils.c gnl/get_next_line.c src/parse.c src/clean.c src/parse_utils.c src/map_read.c src/check_map.c
 
 CFLAGS=-Wall -Wextra -Werror 
 

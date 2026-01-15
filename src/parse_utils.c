@@ -38,7 +38,7 @@ static int	is_numeric(char *str)
 	return (1);
 }
 
-int	parse_rgb(char *line)
+int	parse_rgb(char *line, t_map *map)
 {
 	char	**rgb;
 	int		c[3];
@@ -47,18 +47,18 @@ int	parse_rgb(char *line)
 	if (!rgb || get_arr_len(rgb) != 3)
 	{
 		free_arr(rgb);
-		exit_error(NULL, "Error\nInvalid color format (Must be R,G,B)");
+		exit_error(map, "Error\nInvalid color format (Must be R,G,B)");
 	}
 	if (!is_numeric(rgb[0]) || !is_numeric(rgb[1]) || !is_numeric(rgb[2]))
 	{
 		free_arr(rgb);
-		exit_error(NULL, "Error\nColor values must be numeric");
+		exit_error(map, "Error\nColor values must be numeric");
 	}
 	c[0] = ft_atoi(rgb[0]);
 	c[1] = ft_atoi(rgb[1]);
 	c[2] = ft_atoi(rgb[2]);
 	free_arr(rgb);
 	if (c[0] < 0 || c[0] > 255 || c[1] < 0 || c[1] > 255 || c[2] < 0 || c[2] > 255)
-		exit_error(NULL, "Error\nColor values must be between 0 and 255");
+		exit_error(map, "Error\nColor values must be between 0 and 255");
 	return ((c[0] << 16) | (c[1] << 8) | c[2]);
 }
