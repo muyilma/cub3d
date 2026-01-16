@@ -55,6 +55,7 @@ void    read_map(char *file_path, t_map *map);
 void    check_map_validity(t_map *map);
 void	free_arr(char **arr);
 int     is_map_line(char *line);
+int check_disconnected_map(t_map *map, int player_y, int player_x);
 t_window open_window(t_map data);
 
 #endif
