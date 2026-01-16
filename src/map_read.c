@@ -2,19 +2,18 @@
 
 static int	get_map_height(char *file_path, t_map *map)
 {
-	int		fd;
 	char	*line;
 	int		height;
 	int		map_started;
 
 	height = 0;
 	map_started = 0;
-	fd = open(file_path, O_RDONLY);
-	if (fd < 0)
+	map->fd = open(file_path, O_RDONLY);
+	if (map->fd < 0)
 		exit_error(map, ERR_FILE);
 	while (1)
 	{
-		line = get_next_line(fd);
+		line = get_next_line(map->fd);
 		if (!line)
 			break ;
 		if (!map_started && is_map_line(line))
@@ -23,19 +22,21 @@ static int	get_map_height(char *file_path, t_map *map)
 			height++;
 		free(line);
 	}
-	close(fd);
+	close(map->fd);
+	map->fd = -1;
 	return (height);
 }
 
-static int	check_map_gap(char *line, int *st, int *end)
+static int  check_map_gap(char *line, int *st, int *end)
 {
-	if (!*st && is_map_line(line))
-		*st = 1;
-	if (*st && is_empty_line(line))
-		*end = 1;
-	else if (*st && *end && is_map_line(line))
-		return (1);
-	return (0);
+    if (!*st && is_map_line(line))
+        *st = 1;
+    if (*st && is_empty_line(line))
+        *end = 1;
+    else if (*st && *end && !is_empty_line(line))
+        return (1);
+
+    return (0);
 }
 
 static void	add_line_to_array(t_map *map, char *line, int *i)

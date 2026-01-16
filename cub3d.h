@@ -5,7 +5,6 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
-# include <math.h>
 # include "libft/libft.h"
 # include "gnl/get_next_line.h"
 
