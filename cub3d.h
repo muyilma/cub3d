@@ -16,6 +16,10 @@
 
 typedef struct s_window
 {
+    void    *no_path;
+    void    *so_path;
+    void    *we_path;
+    void    *ea_path;
     void *init;
     void *win;
     
@@ -52,6 +56,6 @@ void    check_map_validity(t_map *map);
 void	free_arr(char **arr);
 int     is_empty_line(char *line);
 int     is_map_line(char *line);
-t_window open_window();
+t_window open_window(t_map data);
 
 #endif

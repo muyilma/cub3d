@@ -35,7 +35,7 @@ int main(int argc, char **argv)
     parse_file(argv[1], &data);
     check_map_validity(&data);
 
-    data.window = open_window();
+    data.window = open_window(data);
     mlx_hook(data.window.win, 17, 0, close_window, &data);   
     mlx_loop(data.window.init);
      free_map(&data);
