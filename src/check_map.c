@@ -63,6 +63,25 @@ static int	check_cell(t_map *map, int x, int y)
 	return (0);
 }
 
+static void	check_surroundings(t_map *map, int x, int y)
+{
+	if (map->map[y][x] != '0')
+		return ;
+
+	if (y == 0 || y == map->height - 1 || x == 0
+		|| x >= (int)ft_strlen(map->map[y]) - 1)
+		exit_error(map, "Error\nMap is not closed (0 is on the edge)");
+	if (x >= (int)ft_strlen(map->map[y - 1])
+		|| x >= (int)ft_strlen(map->map[y + 1]))
+		exit_error(map, "Error\nMap is not closed (Gap in neighbor line)");
+
+	if (!ft_strchr("01NSEW", map->map[y][x + 1])
+		|| !ft_strchr("01NSEW", map->map[y][x - 1])
+		|| !ft_strchr("01NSEW", map->map[y + 1][x])
+		|| !ft_strchr("01NSEW", map->map[y - 1][x]))
+		exit_error(map, "Error\nMap is not closed (Invalid neighbor around 0)");
+}
+
 static void	scan_map(t_map *map)
 {
 	int	x;
@@ -76,6 +95,7 @@ static void	scan_map(t_map *map)
 		x = 0;
 		while (map->map[y][x])
 		{
+			check_surroundings(map, x, y);
 			p_count += check_cell(map, x, y);
 			x++;
 		}

@@ -52,7 +52,7 @@ int	is_map_line(char *line)
 	i = 0;
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
-	if (line[i] == '1' || line[i] == '0')
+	if (line[i] == '1')
 		return (1);
 	return (0);
 }
