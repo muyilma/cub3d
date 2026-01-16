@@ -2,13 +2,13 @@ NAME=cub3d
 
 SRCS= cub3d.c src/utils.c gnl/get_next_line.c src/parse.c src/clean.c src/parse_utils.c src/map_read.c src/check_map.c execute/mlx.c
 
-CFLAGS=-Wall -Wextra -Werror 
+CFLAGS=-Wall -Wextra -Werror -g
 
 LIBFT=libft/libft.a
 
 MLX_LIB=minilibx-linux/libmlx.a
 
-MLX_FLAGS=-L minilibx  -L/usr/X11R6/lib -lXext -lX11 -lm -lbsd
+MLX_FLAGS=-L/usr/X11R6/lib -lXext -lX11 -lm -lbsd
 
 all: $(NAME)
 
@@ -30,7 +30,7 @@ re: fclean all
 
 run: all
 	clear
-	LIBGL_ALWAYS_SOFTWARE=1 ./$(NAME) map/map.cub
+	./$(NAME) map/map.cub
 
 leak: all
 	valgrind --leak-check=full --show-leak-kinds=all ./cub3d map/map.cub 

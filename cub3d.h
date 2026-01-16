@@ -14,6 +14,13 @@
 # define ERR_EXT   "Invalid file extension. Must be .cub"
 # define ERR_FILE  "Could not open file"
 
+typedef struct s_window
+{
+    void *init;
+    void *win;
+    
+}   t_window;
+
 typedef struct s_map
 {
     char    **map;
@@ -28,14 +35,10 @@ typedef struct s_map
     int     p_x;
     int     p_y;
     char    p_dir;
+    t_window window;
 }   t_map;
 
-typedef struct s_window
-{
-    void *init;
-    void *win;
 
-}   t_window;
 
 void    init_map(t_map *map);
 void    check_args(int argc, char **argv);
@@ -49,6 +52,6 @@ void    check_map_validity(t_map *map);
 void	free_arr(char **arr);
 int     is_empty_line(char *line);
 int     is_map_line(char *line);
-t_window open_window(t_window window );
+t_window open_window();
 
 #endif
