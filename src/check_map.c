@@ -20,7 +20,7 @@ static int	check_cell(t_map *map, int x, int y)
 
 static void	check_surroundings(t_map *map, int x, int y)
 {
-	if (map->map[y][x] != '0')
+	if (!ft_strchr("0NSEW", map->map[y][x]))
 		return ;
 
 	if (y == 0 || y == map->height - 1 || x == 0

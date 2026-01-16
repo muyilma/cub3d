@@ -45,9 +45,11 @@ static int **change_to_int(char **map)
 }
 
 
-static void    flood_fill(char **map, int y, int x, int **visited)
+static void flood_fill(char **map, int y, int x, int **visited)
 {
-    if (y < 0 || x < 0 || !map[y] || !map[y][x])
+    if (y < 0 || x < 0 || !map[y])
+        return ;
+    if (x >= (int)ft_strlen(map[y]))
         return ;
     if (map[y][x] == ' ' || visited[y][x])
         return ;
