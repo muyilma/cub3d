@@ -28,6 +28,7 @@ typedef struct s_map
     int     p_x;
     int     p_y;
     char    p_dir;
+    int     fd;
 }   t_map;
 
 void    init_map(t_map *map);

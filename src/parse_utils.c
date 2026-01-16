@@ -10,16 +10,6 @@ static int	get_arr_len(char **arr)
 	return (i);
 }
 
-void	free_arr(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr);
-}
-
 static int	is_numeric(char *str)
 {
 	int	i;

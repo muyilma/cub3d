@@ -72,15 +72,14 @@ static int	parse_line(char *line, t_map *map)
 
 void	parse_file(char *file_path, t_map *map)
 {
-	int		fd;
 	char	*line;
 
-	fd = open(file_path, O_RDONLY);
-	if (fd < 0)
+	map->fd = open(file_path, O_RDONLY);
+	if (map->fd < 0)
 		exit_error(map, ERR_FILE);
 	while (1)
 	{
-		line = get_next_line(fd);
+		line = get_next_line(map->fd);
 		if (!line)
 			break ;
 		if (parse_line(line, map))
@@ -90,7 +89,8 @@ void	parse_file(char *file_path, t_map *map)
 		}
 		free(line);
 	}
-	close(fd);
+	close(map->fd);
+	map->fd = -1;
 	if (!map->no_path || !map->so_path || !map->we_path || !map->ea_path
 		|| map->floor_color == -1 || map->ceil_color == -1)
 	{
