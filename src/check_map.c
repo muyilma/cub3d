@@ -23,20 +23,43 @@ static char	**copy_map(t_map *map)
 	return (copy);
 }
 
+static void	check_islands(t_map *map, char **copy)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (copy[y])
+	{
+		x = 0;
+		while (copy[y][x])
+		{
+			if (copy[y][x] == '0')
+			{
+				free_arr(copy);
+				exit_error(map, "Error\nDouble map or disconnected parts detected");
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
 static void	flood_fill(t_map *map, char **copy, int x, int y)
 {
-	if (x < 0 || y < 0 || y >= map->height
-		|| x >= (int)ft_strlen(copy[y]))
-	{
-		free_arr(copy);
-		exit_error(map, "Error\nMap is not closed (Player falls to void)");
-	}
-	if (copy[y][x] == '1' || copy[y][x] == 'V')
+	if (x < 0 || y < 0 || y >= map->height || x >= (int)ft_strlen(copy[y]))
 		return ;
+	if (copy[y][x] == 'V')
+		return ;
+	if (copy[y][x] == '1')
+	{
+		copy[y][x] = 'V';
+		return ;
+	}
 	if (copy[y][x] == ' ')
 	{
 		free_arr(copy);
-		exit_error(map, "Error\nMap is not closed (Space found inside)");
+		exit_error(map, "Error\nMap is not closed (Gap detected by flood fill)");
 	}
 	copy[y][x] = 'V';
 	flood_fill(map, copy, x + 1, y);
@@ -114,5 +137,6 @@ void	check_map_validity(t_map *map)
 	if (!temp_map)
 		exit_error(map, "Error\nMalloc failed in check_map");
 	flood_fill(map, temp_map, map->p_x, map->p_y);
+	check_islands(map, temp_map);
 	free_arr(temp_map);
 }
