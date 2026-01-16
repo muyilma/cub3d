@@ -39,6 +39,7 @@ typedef struct s_map
     int     p_y;
     char    p_dir;
     int     fd;
+    t_window window;
 }   t_map;
 
 

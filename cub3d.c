@@ -6,6 +6,7 @@ int	close_window(t_map   *data)
 	mlx_destroy_window(data->window.init, data->window.win);
 	mlx_destroy_display(data->window.init);
 	free(data->window.init);
+    
     free_map(data);
 	exit(0);
 }
