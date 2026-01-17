@@ -13,6 +13,25 @@
 # define ERR_EXT   "Invalid file extension. Must be .cub"
 # define ERR_FILE  "Could not open file"
 
+typedef struct s_img
+{
+    void    *img;
+    char    *addr;
+    int     bpp;
+    int     line_len;
+    int     endian;
+}   t_img;
+
+typedef struct s_player
+{
+    double x;
+    double y;
+    double dir_x;
+    double dir_y;
+    double plane_y;
+    double plane_x;
+}       t_player;
+
 typedef struct s_window
 {
     void    *no_path;
@@ -40,10 +59,12 @@ typedef struct s_map
     char    p_dir;
     int     fd;
     t_window window;
+    t_player player;
+    t_img img;
 }   t_map;
 
 
-
+t_player  init_player(t_map map);
 void    init_map(t_map *map);
 void    check_args(int argc, char **argv);
 void    parse_file(char *file_path, t_map *map);
