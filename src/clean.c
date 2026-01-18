@@ -3,7 +3,8 @@
 void	free_arr(char **arr)
 {
 	int	i;
-
+    if (!arr)
+		return ;
 	i = 0;
 	while (arr[i])
 		free(arr[i++]);
@@ -28,12 +29,15 @@ void    free_map(t_map *map)
 
 void    exit_error(t_map *map, char *msg)
 {
+    char *line;
+
     free_map(map);
     if (map && map->fd != -1)
     {
-        char *line;
         while ((line = get_next_line(map->fd)))
-            free(line);
+        {
+           free(line);
+        }
         close(map->fd);
         map->fd = -1;
     }
