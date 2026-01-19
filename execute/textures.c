@@ -69,8 +69,17 @@ void    draw_wall(t_map *d, int x, int start, int end, double dist)
     tex_x = get_tex_x(d, tex_id, wall_x);
     step = 1.0 * d->tex[tex_id].height / (end - start);
     tex_pos = (start - 1080 / 2 + (end - start) / 2) * step;
+
+    if (start < 0)
+    {
+        tex_pos += (-start) * step; // skip the offscreen part of the texture
+        start = 0;
+    }
+    if (end >= 1080)
+        end = 1079;
+
     y = start;
-    while (y < end)
+    while (y <= end)
     {
         int tex_y = (int)tex_pos & (d->tex[tex_id].height - 1);
         int color = get_tex_color(&d->tex[tex_id], tex_x, tex_y);
