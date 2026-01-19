@@ -63,8 +63,10 @@ typedef struct s_map
     t_img img;
 }   t_map;
 
-
+void    init_map(t_map *map);
+int	close_window(t_map   *data);
 t_player  init_player(t_map map);
+t_img image_create(t_map data);
 void    init_map(t_map *map);
 void    check_args(int argc, char **argv);
 void    parse_file(char *file_path, t_map *map);

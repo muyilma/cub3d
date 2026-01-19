@@ -18,33 +18,13 @@ t_window open_window(t_map data)
     return window;
 }
 
-t_player  init_player(t_map map)
+int	close_window(t_map   *data)
 {
-    map.player.x = map.p_x + 0.5;
-    map.player.y = map.p_y + 0.5;
-
-    if (map.p_dir == 'N')
-    {
-        map.player.dir_x = 0;
-        map.player.dir_y = -1;
-    }
-    else if (map.p_dir == 'S')
-    {
-        map.player.dir_x = 0;
-        map.player.dir_y = 1;
-    }
-    else if (map.p_dir == 'E')
-    {
-        map.player.dir_x = 1;
-        map.player.dir_y = 0;
-    }
-    else if (map.p_dir == 'W')
-    {
-        map.player.dir_x = -1;
-        map.player.dir_y = 0;
-    }
-    map.player.plane_x = -map.player.dir_y * 0.66;//bunları anlamadın
-    map.player.plane_y =  map.player.dir_x * 0.66;//bunları anlamadın
-
-    return map.player;
+    mlx_destroy_image(data->window.init,data->img.img);
+	mlx_destroy_window(data->window.init, data->window.win);
+	mlx_destroy_display(data->window.init);
+	free(data->window.init);
+    
+    free_map(data);
+	exit(0);
 }
