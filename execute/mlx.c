@@ -1,19 +1,34 @@
 #include "../cub3d.h"
 #include "../minilibx-linux/mlx.h"
 
-t_window open_window(t_map data)
+void    load_texture(t_map *d, int i, char *path)
 {
-    t_window window;
-    int witdth;
-    int height;
+    d->tex[i].img = mlx_xpm_file_to_image(d->init,path,&d->tex[i].width,&d->tex[i].height);
+    d->tex[i].addr = mlx_get_data_addr(d->tex[i].img,&d->tex[i].bpp,&d->tex[i].line_len,&d->tex[i].endian);
+}
 
-    witdth=64;
-    height=64;
-    window.init=mlx_init();
-    window.win =mlx_new_window(window.init,1920,1080,"naber mudur");
-    window.no_path=mlx_xpm_file_to_image(window.init,data.no_path,&witdth,&height);
-    window.ea_path=mlx_xpm_file_to_image(window.init,data.ea_path,&witdth,&height);
-    window.so_path=mlx_xpm_file_to_image(window.init,data.so_path,&witdth,&height);
-    window.we_path=mlx_xpm_file_to_image(window.init,data.we_path,&witdth,&height);
-    return window;
+void	open_window(t_map *data)
+{
+	data->init = mlx_init();
+	data->win = mlx_new_window(data->init, 1920, 1080, "cub3D");
+    data->img.img  = mlx_new_image(data->init, 1920, 1080);
+    data->img.addr = mlx_get_data_addr(data->img.img,&data->img.bpp,&data->img.line_len,&data->img.endian);
+    load_texture(data, TEX_NO, data->no_path);
+    load_texture(data, TEX_SO, data->so_path);
+    load_texture(data, TEX_WE, data->we_path);
+    load_texture(data, TEX_EA, data->ea_path);
+}
+
+int	close_window(t_map *data)
+{
+	mlx_destroy_image(data->init, data->tex[0].img);
+	mlx_destroy_image(data->init, data->tex[1].img);
+	mlx_destroy_image(data->init, data->tex[2].img);
+	mlx_destroy_image(data->init, data->tex[3].img);
+	mlx_destroy_image(data->init, data->img.img);
+	mlx_destroy_window(data->init, data->win);
+	mlx_destroy_display(data->init);
+	free(data->init);
+	free_map(data);
+	exit(0);
 }
