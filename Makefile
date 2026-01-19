@@ -3,7 +3,7 @@ NAME=cub3d
 SRCS= cub3d.c src/utils.c gnl/get_next_line.c src/parse.c src/clean.c src/parse_utils.c src/map_read.c \
 src/check_map.c src/flood_fill.c execute/mlx.c init/initalation.c execute/key_code.c execute/raycast.c execute/textures.c
 
-CFLAGS=#-Wall -Wextra -Werror -g
+CFLAGS=-Wall -Wextra -Werror -g
 
 LIBFT=libft/libft.a
 
