@@ -1,0 +1,139 @@
+#include "../cub3d.h"
+#include "../minilibx-linux/mlx.h"
+#include <math.h>
+
+void my_mlx_pixel_put(t_img *img, int x, int y, int color)
+{
+    char *dest;
+
+    if (x < 0 || x >= 1920 || y < 0 || y >= 1080)
+        return;
+    dest = img->addr + (y * img->line_len + x * (img->bpp / 8));
+    *(int *)dest = color;
+}
+
+void draw_vertical_line(t_img *img, int x, int start, int end, int color)
+{
+    int y;
+
+    if (start < 0) 
+        start = 0;
+    if (end >= 1080) 
+        end = 1079;
+
+    y = start- 1;
+    while (++y <= end)
+        my_mlx_pixel_put(img, x, y, color);
+}
+
+double  calc_wall_dist(t_map *d)
+{
+    if (d->r.side == 0)
+        return ((d->r.map_x - d->player.x + (1 - d->r.step_x) / 2) / d->r.ray_x);
+    else
+        return ((d->r.map_y - d->player.y + (1 - d->r.step_y) / 2) / d->r.ray_y);
+}
+
+void    perform_dda(t_map *d)
+{
+    int hit;
+
+    hit = 0;
+    while (!hit)
+    {
+        if (d->r.side_x < d->r.side_y)
+        {
+            d->r.side_x += d->r.delta_x;
+            d->r.map_x += d->r.step_x;
+            d->r.side = 0;
+        }
+        else
+        {
+            d->r.side_y += d->r.delta_y;
+            d->r.map_y += d->r.step_y;
+            d->r.side = 1;
+        }
+        if (d->map[d->r.map_y][d->r.map_x] == '1')
+            hit = 1;
+    }
+}
+
+void    init_dda(t_map *d)
+{
+    d->r.map_x = (int)d->player.x;
+    d->r.map_y = (int)d->player.y;
+    d->r.delta_x = fabs(1 / d->r.ray_x);
+    d->r.delta_y = fabs(1 / d->r.ray_y);
+    if (d->r.ray_x < 0)
+    {
+        d->r.step_x = -1;
+        d->r.side_x = (d->player.x - d->r.map_x) * d->r.delta_x;
+    }
+    else
+    {
+        d->r.step_x = 1;
+        d->r.side_x = (d->r.map_x + 1.0 - d->player.x) * d->r.delta_x;
+    }
+
+    if (d->r.ray_y < 0)
+    {
+        d->r.step_y = -1;
+        d->r.side_y = (d->player.y - d->r.map_y) * d->r.delta_y;
+    }
+    else
+    {
+        d->r.step_y = 1;
+        d->r.side_y = (d->r.map_y + 1.0 - d->player.y) * d->r.delta_y;
+    }
+}
+char    get_wall_dir(t_map *d)
+{
+    if (d->r.side == 0) // dikey duvar (x-side)
+    {
+        if (d->r.ray_x > 0)
+            return ('W'); // batı duvarına çarptın
+        else
+            return ('E'); // doğu duvarına çarptın
+    }
+    else // yatay duvar (y-side)
+    {
+        if (d->r.ray_y > 0)
+            return ('N'); // kuzey duvarı
+        else
+            return ('S'); // güney duvarı
+    }
+}
+
+void    raycast(t_map *d)
+{
+    int     x;
+    double  dist;
+    int     h;
+
+    x = 0;
+    while (x < 1920)
+    {
+        d->r.camera_x = 2.0 * x / 1920 - 1.0;
+        d->r.ray_x = d->player.dir_x + d->player.plane_x * d->r.camera_x;
+        d->r.ray_y = d->player.dir_y + d->player.plane_y * d->r.camera_x;
+        init_dda(d);
+        perform_dda(d);
+        dist = calc_wall_dist(d);
+        h = 1080 / dist;
+
+        char dir = get_wall_dir(d);
+        int color;
+
+        if (dir == 'N')
+            color = 0xff0000;
+        else if (dir == 'S')
+            color = 0x00ff00;
+        else if (dir == 'E')
+            color = 0x0000ff;
+        else
+            color = 0xffff00;
+
+        draw_vertical_line(&d->img, x,-h / 2 + 1080 / 2,h / 2 + 1080 / 2,color);
+        x++;
+    }
+}

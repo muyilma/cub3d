@@ -23,7 +23,6 @@ t_player  init_player(t_map map)
 {
     map.player.x = map.p_x + 0.5;
     map.player.y = map.p_y + 0.5;
-
     if (map.p_dir == 'N')
     {
         map.player.dir_x = 0;
@@ -44,9 +43,8 @@ t_player  init_player(t_map map)
         map.player.dir_x = -1;
         map.player.dir_y = 0;
     }
-    map.player.plane_x = -map.player.dir_y * 0.66;//bunları anlamadın
-    map.player.plane_y =  map.player.dir_x * 0.66;//bunları anlamadın
-
+    map.player.plane_x = -map.player.dir_y * 0.66;
+    map.player.plane_y =  map.player.dir_x * 0.66;
     return map.player;
 }
 

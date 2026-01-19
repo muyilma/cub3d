@@ -13,6 +13,22 @@
 # define ERR_EXT   "Invalid file extension. Must be .cub"
 # define ERR_FILE  "Could not open file"
 
+typedef struct s_ray
+{
+    double  camera_x;
+    double  ray_x;
+    double  ray_y;
+    int     map_x;
+    int     map_y;
+    double  delta_x;
+    double  delta_y;
+    int     step_x;
+    int     step_y;
+    double  side_x;
+    double  side_y;
+    int     side;
+}   t_ray;
+
 typedef struct s_img
 {
     void    *img;
@@ -61,8 +77,11 @@ typedef struct s_map
     t_window window;
     t_player player;
     t_img img;
+    t_ray    r;
 }   t_map;
 
+void raycast(t_map *d);
+int key_code(int keycode, t_map *m);
 void    init_map(t_map *map);
 int	close_window(t_map   *data);
 t_player  init_player(t_map map);
