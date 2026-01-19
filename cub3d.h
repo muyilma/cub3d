@@ -49,13 +49,15 @@ void    check_args(int argc, char **argv);
 void    parse_file(char *file_path, t_map *map);
 void    exit_error(t_map *map, char *msg);
 void    free_map(t_map *map);
-int     check_extension(char *file);
-int     parse_rgb(char *line, t_map *map);
+int     check_extension(char *file, char *str);
+int	parse_rgb(char *line, t_map *map, char *free_line);
 void    read_map(char *file_path, t_map *map);
 void    check_map_validity(t_map *map);
 void	free_arr(char **arr);
 int     is_map_line(char *line);
-int check_disconnected_map(t_map *map, int player_y, int player_x);
+void	flood_fill(t_map *map, char **cpymap, int x, int y);
+char	**create_map_copy(t_map *map);
+void	cpymap_control(t_map *map, char **cpymap);
 t_window open_window(t_map data);
 
 #endif

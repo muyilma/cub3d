@@ -7,9 +7,10 @@ static char	*skip_spaces(char *line)
 	return (line);
 }
 
-static void	parse_path(char *line, t_map *map, char **path_ptr)
+static void	parse_path(char *line, t_map *map, char **path_ptr, char *free_line)
 {
 	char	*trimmed;
+	int		fd;
 
 	if (*path_ptr != NULL)
 		exit_error(map, "Error\nDuplicate texture identifier");
@@ -21,24 +22,39 @@ static void	parse_path(char *line, t_map *map, char **path_ptr)
 	{
 		if (trimmed)
 			free(trimmed);
+		free(free_line);
 		exit_error(map, "Error\nInvalid texture path");
 	}
 	*path_ptr = trimmed;
+
+	fd = open(*path_ptr, O_RDONLY);
+	if(fd < 0 || (!check_extension(*path_ptr, ".xpm")))
+	{
+		free(free_line);
+		exit_error(map, ERR_FILE);
+	}
+
 }
 
-static void	parse_color_line(char *line, t_map *map, int *color_ptr)
+static void	parse_color_line(char *line, t_map *map, int *color_ptr, char *free_line)
 {
 	char	*ptr;
 
 	if (*color_ptr != -1)
-		exit_error(map, "Error\nDuplicate color identifier");
+	{
+		free(free_line);
+		exit_error(map, "Duplicate color identifier");
+	}
 	
 	ptr = line + 1;
 	ptr = skip_spaces(ptr);
 
 	if (!*ptr)
-		exit_error(map, "Error\nMissing color values");
-	*color_ptr = parse_rgb(ptr, map);
+	{
+		free(free_line);
+		exit_error(map, "Missing color values");
+	}
+	*color_ptr = parse_rgb(ptr, map, free_line);
 }
 
 static int	parse_line(char *line, t_map *map)
@@ -49,23 +65,23 @@ static int	parse_line(char *line, t_map *map)
 	if (!*ptr || *ptr == '\n')
 		return (0);
 	if (ft_strncmp(ptr, "NO", 2) == 0)
-		parse_path(ptr, map, &map->no_path);
+		parse_path(ptr, map, &map->no_path, line);
 	else if (ft_strncmp(ptr, "SO", 2) == 0)
-		parse_path(ptr, map, &map->so_path);
+		parse_path(ptr, map, &map->so_path, line);
 	else if (ft_strncmp(ptr, "WE", 2) == 0)
-		parse_path(ptr, map, &map->we_path);
+		parse_path(ptr, map, &map->we_path, line);
 	else if (ft_strncmp(ptr, "EA", 2) == 0)
-		parse_path(ptr, map, &map->ea_path);
+		parse_path(ptr, map, &map->ea_path, line);
 	else if (ft_strncmp(ptr, "F", 1) == 0)
-		parse_color_line(ptr, map, &map->floor_color);
+		parse_color_line(ptr, map, &map->floor_color, line);
 	else if (ft_strncmp(ptr, "C", 1) == 0)
-		parse_color_line(ptr, map, &map->ceil_color);
-	else if (*ptr == '1' || *ptr == '0')
+		parse_color_line(ptr, map, &map->ceil_color, line);
+	else if (*ptr == '1')
 		return (1);
 	else
 	{
 		free(line);
-		exit_error(map, "Error\nInvalid identifier");
+		exit_error(map, "Invalid identifier");
 	}
 	return (0);
 }
