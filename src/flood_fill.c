@@ -1,83 +1,65 @@
 #include "../cub3d.h"
 
-static void	free_pointer(void **ptr)
+char	**create_map_copy(t_map *map)
 {
-	int	i;
+	char	**copy;
+	int		i;
 
-	if (!ptr)
-		return ;
+	copy = malloc(sizeof(char *) * (map->height + 1));
+	if (!copy)
+		return (NULL);
 	i = 0;
-	while (ptr[i])
+	while (map->map[i])
 	{
-		free(ptr[i]);
+		copy[i] = ft_strdup(map->map[i]);
+		if (!copy[i])
+		{
+			while (--i >= 0)
+				free(copy[i]);
+			free(copy);
+			return (NULL);
+		}
 		i++;
 	}
-	free(ptr);
-	ptr = NULL;
+	copy[i] = NULL;
+	return (copy);
 }
 
-static int **change_to_int(char **map)
+void	flood_fill(t_map *map, char **cpymap, int x, int y)
 {
-    int **board;
-    int y;
-    size_t  len;
-    y = 0;
-    while (map[y])
-        y++;
-    board = malloc(sizeof(int *) * (y + 1));
-    if (!board)
-        return (NULL);
-    y = -1;
-    while (map[++y])
-    {
-        len = ft_strlen(map[y]);
-        board[y] = ft_calloc(len, sizeof(int));
-        if (!board[y])
-        {
-            while (y--)
-                free(board[y]);
-            free(board);
-            return (NULL);
-        }
-    }
-    board[y] = NULL;
-    return (board);
+	if (y < 0 || y >= map->height || x < 0 || !cpymap[y])
+		return ;
+	if (x >= (int)ft_strlen(cpymap[y]))
+		return ;
+	if (cpymap[y][x] == ' ' || cpymap[y][x] == '\t' || 
+		cpymap[y][x] == '\n' || cpymap[y][x] == 'F')
+		return ;
+	cpymap[y][x] = 'F';
+	flood_fill(map, cpymap, x + 1, y);
+	flood_fill(map, cpymap, x - 1, y);
+	flood_fill(map, cpymap, x, y + 1);
+	flood_fill(map, cpymap, x, y - 1);
 }
 
-
-static void flood_fill(char **map, int y, int x, int **visited)
+void	cpymap_control(t_map *map, char **cpymap)
 {
-    if (y < 0 || x < 0 || !map[y])
-        return ;
-    if (x >= (int)ft_strlen(map[y]))
-        return ;
-    if (map[y][x] == ' ' || visited[y][x])
-        return ;
-    visited[y][x] = 1;
-    flood_fill(map, y + 1, x, visited);
-    flood_fill(map, y - 1, x, visited);
-    flood_fill(map, y, x + 1, visited);
-    flood_fill(map, y, x - 1, visited);
-}
+	int	y;
+	int	x;
 
-int check_disconnected_map(t_map *map, int player_y, int player_x)
-{
-    int x;
-    int y;
-    int **board;
-    board = change_to_int(map->map);
-    if (!board)
-        return (exit_error(map, "Malloc failed"), 1);
-    flood_fill(map->map, player_y, player_x, board);
-    y = -1;
-    while (map->map[++y])
-    {
-        x = -1;
-        while (map->map[y][++x])
-        if (ft_strchr("0NSEW1", map->map[y][x]) && !board[y][x])
-            return (free_pointer((void **)board),
-            exit_error(map, "Map has disconnected Area"), 1);
-    }
-    return (free_pointer((void **)board), 0);
+	y = 0;
+	while (cpymap[y])
+	{
+		x = 0;
+		while (cpymap[y][x])
+		{
+			if (cpymap[y][x] != '\t' && cpymap[y][x] != 'F' 
+				&& cpymap[y][x] != ' ' && cpymap[y][x] != '\n')
+			{
+				free_arr(cpymap);
+				exit_error(map, "Multiple map errors");
+			}
+			x++;
+		}
+		y++;
+	}
 }
-

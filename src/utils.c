@@ -1,13 +1,13 @@
 #include "../cub3d.h"
 
-int     check_extension(char *file)
+int     check_extension(char *file, char *str)
 {
     size_t  len;
 
     len = ft_strlen(file);
     if (len < 4)
         return (0);
-    if (ft_strncmp(file + len - 4, ".cub", 4) == 0)
+    if (ft_strncmp(file + len - 4, str, 4) == 0)
         return (1);
     return (0);
 }
@@ -19,7 +19,7 @@ void    check_args(int argc, char **argv)
     if (argc != 2)
         exit_error(NULL, ERR_USAGE);
 
-    if (!check_extension(argv[1]))
+    if (!check_extension(argv[1], ".cub"))
         exit_error(NULL, ERR_EXT);
 
     fd = open(argv[1], O_RDONLY);
