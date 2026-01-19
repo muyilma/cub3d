@@ -48,11 +48,3 @@ t_player  init_player(t_map map)
     return map.player;
 }
 
-t_img image_create(t_map data)
-{
-    t_img new_image;
-
-    new_image.img  = mlx_new_image(data.window.init, 1920, 1080);
-    new_image.addr = mlx_get_data_addr(new_image.img,&new_image.bpp,&new_image.line_len,&new_image.endian);
-    return new_image;
-}

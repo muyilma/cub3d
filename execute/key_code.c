@@ -20,7 +20,7 @@ void redraw(t_map *m)
 {
     ft_memset(m->img.addr, 0, 1080 * m->img.line_len);
     raycast(m);
-    mlx_put_image_to_window(m->window.init,m->window.win,m->img.img,0, 0);
+    mlx_put_image_to_window(m->init,m->win,m->img.img,0, 0);
 }
 
 static void rotate_player(t_map *m, double angle)

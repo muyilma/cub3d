@@ -86,23 +86,6 @@ void    init_dda(t_map *d)
         d->r.side_y = (d->r.map_y + 1.0 - d->player.y) * d->r.delta_y;
     }
 }
-char    get_wall_dir(t_map *d)
-{
-    if (d->r.side == 0) // dikey duvar (x-side)
-    {
-        if (d->r.ray_x > 0)
-            return ('W'); // batı duvarına çarptın
-        else
-            return ('E'); // doğu duvarına çarptın
-    }
-    else // yatay duvar (y-side)
-    {
-        if (d->r.ray_y > 0)
-            return ('N'); // kuzey duvarı
-        else
-            return ('S'); // güney duvarı
-    }
-}
 
 void    raycast(t_map *d)
 {
@@ -120,20 +103,9 @@ void    raycast(t_map *d)
         perform_dda(d);
         dist = calc_wall_dist(d);
         h = 1080 / dist;
-
-        char dir = get_wall_dir(d);
-        int color;
-
-        if (dir == 'N')
-            color = 0xff0000;
-        else if (dir == 'S')
-            color = 0x00ff00;
-        else if (dir == 'E')
-            color = 0x0000ff;
-        else
-            color = 0xffff00;
-
-        draw_vertical_line(&d->img, x,-h / 2 + 1080 / 2,h / 2 + 1080 / 2,color);
+        
+        draw_wall(d, x, -h / 2 + 1080 / 2, h / 2 + 1080 / 2, dist);
+        // draw_vertical_line(&d->img, x,-h / 2 + 1080 / 2,h / 2 + 1080 / 2,color);
         x++;
     }
 }

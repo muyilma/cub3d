@@ -12,6 +12,10 @@
 # define ERR_USAGE "Usage: ./cub3D <map_path.cub>"
 # define ERR_EXT   "Invalid file extension. Must be .cub"
 # define ERR_FILE  "Could not open file"
+#define TEX_NO 0
+#define TEX_SO 1
+#define TEX_WE 2
+#define TEX_EA 3
 
 typedef struct s_ray
 {
@@ -36,6 +40,8 @@ typedef struct s_img
     int     bpp;
     int     line_len;
     int     endian;
+    int     width;
+    int     height;
 }   t_img;
 
 typedef struct s_player
@@ -47,17 +53,6 @@ typedef struct s_player
     double plane_y;
     double plane_x;
 }       t_player;
-
-typedef struct s_window
-{
-    void    *no_path;
-    void    *so_path;
-    void    *we_path;
-    void    *ea_path;
-    void *init;
-    void *win;
-    
-}   t_window;
 
 typedef struct s_map
 {
@@ -74,18 +69,22 @@ typedef struct s_map
     int     p_y;
     char    p_dir;
     int     fd;
-    t_window window;
+    void *init;
+    void *win;
     t_player player;
     t_img img;
+    t_img tex[4];
     t_ray    r;
 }   t_map;
 
+
+void my_mlx_pixel_put(t_img *img, int x, int y, int color);
+void    draw_wall(t_map *d, int x, int start, int end, double dist);
 void raycast(t_map *d);
 int key_code(int keycode, t_map *m);
 void    init_map(t_map *map);
-int	close_window(t_map   *data);
+int	       close_window(t_map   *data);
 t_player  init_player(t_map map);
-t_img image_create(t_map data);
 void    init_map(t_map *map);
 void    check_args(int argc, char **argv);
 void    parse_file(char *file_path, t_map *map);
@@ -98,6 +97,6 @@ void    check_map_validity(t_map *map);
 void	free_arr(char **arr);
 int     is_map_line(char *line);
 int check_disconnected_map(t_map *map, int player_y, int player_x);
-t_window open_window(t_map data);
+void open_window(t_map *data);
 
 #endif
