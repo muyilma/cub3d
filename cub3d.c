@@ -15,6 +15,8 @@ int main(int argc, char **argv)
     raycast(&data);
     mlx_put_image_to_window(data.init,data.win,data.img.img,0, 0);
     mlx_hook(data.win, 17, 0, close_window, &data);
-    mlx_hook(data.win, 2, (1L << 0), key_code, &data);
+    mlx_hook(data.win, 2, (1L << 0), key_press, &data);
+    mlx_hook(data.win, 3, (1L << 1), key_release, &data);
+    mlx_loop_hook(data.init, game_loop, &data);
     mlx_loop(data.init);
 }

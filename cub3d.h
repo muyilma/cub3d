@@ -44,6 +44,16 @@ typedef struct s_img
     int     height;
 }   t_img;
 
+typedef struct s_keys
+{
+    int     w;
+    int     s;
+    int     a;
+    int     d;
+    int     left;
+    int     right;
+}   t_keys;
+
 typedef struct s_player
 {
     double x;
@@ -78,13 +88,16 @@ typedef struct s_map
     t_img img;
     t_img tex[4];
     t_ray    r;
+    t_keys  keys;
 }   t_map;
 
 
 void my_mlx_pixel_put(t_img *img, int x, int y, int color);
 void    draw_wall(t_map *d, int x, int start, int end, double dist);
 void raycast(t_map *d);
-int key_code(int keycode, t_map *m);
+int key_press(int keycode, t_map *m);
+int key_release(int keycode, t_map *m);
+int game_loop(t_map *m);
 void    init_map(t_map *map);
 int	       close_window(t_map   *data);
 t_player  init_player(t_map map);
