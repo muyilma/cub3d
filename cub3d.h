@@ -66,8 +66,11 @@ typedef struct s_map
     char    *ea_path;
     int     floor_color;
     int     ceil_color;
-    int     p_x;
+    int     t_x;
+    int     t_y;
+    int     t_id;
     int     p_y;
+    int     p_x;
     char    p_dir;
     void *init;
     void *win;

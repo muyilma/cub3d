@@ -20,10 +20,10 @@ int	get_wall_dir(t_map *d)
 	}
 }
 
-double	get_wall_x(t_map *d,int tex_id, double dist)
+double	get_wall_x(t_map *d, int tex_id, double dist)
 {
 	double	wall_x;
-	int	tex_x;
+	int		tex_x;
 
 	if (d->r.side == 0)
 		wall_x = d->player.y + dist * d->r.ray_y;
@@ -46,36 +46,38 @@ int	get_tex_color(t_img *tex, int x, int y)
 	return (*(unsigned int *)dst);
 }
 
+void	clamp_wall_bounds(int *start, int *end, double step, double *tex_pos)
+{
+	if (*start < 0)
+	{
+		*tex_pos += (-*start) * step;
+		*start = 0;
+	}
+	if (*end >= 1080)
+		*end = 1079;
+}
+
 void	draw_wall(t_map *d, int x, int start, int end, double dist)
 {
-	int		t_id;
-	int		t_x;
-	int		t_y;
 	int		y;
 	double	step;
 	double	tex_pos;
 
-	t_id = get_wall_dir(d);
-	t_x = get_wall_x(d, t_id, dist);
-	step = 1.0 * d->tex[t_id].height / (end - start);
+	d->t_id = get_wall_dir(d);
+	d->t_x = get_wall_x(d, d->t_id, dist);
+	step = 1.0 * d->tex[d->t_id].height / (end - start);
 	tex_pos = (start - 1080 / 2 + (end - start) / 2) * step;
-	if (start < 0)
-	{
-		tex_pos += (-start) * step;
-		start = 0;
-	}
-	if (end >= 1080)
-		end = 1079;
+	clamp_wall_bounds(&start, &end, step, &tex_pos);
 	y = 0;
 	while (y < start)
-    	my_mlx_pixel_put(&d->img, x, y++, d->ceil_color);
-	y = start-1;
+		my_mlx_pixel_put(&d->img, x, y++, d->ceil_color);
+	y = start - 1;
 	while (++y <= end)
 	{
-		t_y = (int)tex_pos & (d->tex[t_id].height - 1);
+		d->t_y = (int)tex_pos & (d->tex[d->t_id].height - 1);
 		tex_pos += step;
-		my_mlx_pixel_put(&d->img, x, y, get_tex_color(&d->tex[t_id], t_x, t_y));
+		my_mlx_pixel_put(&d->img, x, y, get_tex_color(&d->tex[d->t_id], d->t_x, d->t_y));
 	}
 	while (y < 1080)
-   		 my_mlx_pixel_put(&d->img, x, y++, d->floor_color);
+		my_mlx_pixel_put(&d->img, x, y++, d->floor_color);
 }
