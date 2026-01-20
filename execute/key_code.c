@@ -17,7 +17,6 @@ static void	player_move(t_map *m, double move_x, double move_y)
 
 static void	redraw(t_map *m)
 {
-	ft_memset(m->img.addr, 0, 1080 * m->img.line_len);
 	raycast(m);
 	mlx_put_image_to_window(m->init, m->win, m->img.img, 0, 0);
 }
