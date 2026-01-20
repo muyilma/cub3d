@@ -31,8 +31,7 @@ void	flood_fill(t_map *map, char **cpymap, int x, int y)
 		return ;
 	if (x >= (int)ft_strlen(cpymap[y]))
 		return ;
-	if (cpymap[y][x] == ' ' || cpymap[y][x] == '\t' || 
-		cpymap[y][x] == '\n' || cpymap[y][x] == 'F')
+	if (cpymap[y][x] == ' ' || cpymap[y][x] == '\n' || cpymap[y][x] == 'F')
 		return ;
 	cpymap[y][x] = 'F';
 	flood_fill(map, cpymap, x + 1, y);
@@ -52,8 +51,7 @@ void	cpymap_control(t_map *map, char **cpymap)
 		x = 0;
 		while (cpymap[y][x])
 		{
-			if (cpymap[y][x] != '\t' && cpymap[y][x] != 'F' 
-				&& cpymap[y][x] != ' ' && cpymap[y][x] != '\n')
+			if (cpymap[y][x] != 'F' && cpymap[y][x] != ' ' && cpymap[y][x] != '\n')
 			{
 				free_arr(cpymap);
 				exit_error(map, "Multiple map errors");

@@ -25,21 +25,8 @@ void    check_args(int argc, char **argv)
     fd = open(argv[1], O_RDONLY);
     if (fd < 0)
     {
-        perror("Error\nSystem");
+        perror("System");
         exit(1);
     }
     close(fd);
-}
-
-
-int	is_map_line(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] == ' ' || line[i] == '\t')
-		i++;
-	if (line[i] == '1')
-		return (1);
-	return (0);
 }

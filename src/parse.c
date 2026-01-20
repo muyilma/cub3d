@@ -7,54 +7,46 @@ static char	*skip_spaces(char *line)
 	return (line);
 }
 
-static void	parse_path(char *line, t_map *map, char **path_ptr, char *free_line)
+static void	parse_path(char *line, t_map *map, char **path_ptr)
 {
 	char	*trimmed;
 	int		fd;
 
 	if (*path_ptr != NULL)
-		exit_error(map, "Error\nDuplicate texture identifier");
+		exit_error(map, "Duplicate texture identifier");
 	
 	line += 2;
 	line = skip_spaces(line);
-	trimmed = ft_strtrim(line, " \n");
+	trimmed = ft_strtrim(line, " \n\t");
 	if (!trimmed || ft_strlen(trimmed) == 0)
 	{
 		if (trimmed)
 			free(trimmed);
-		free(free_line);
-		exit_error(map, "Error\nInvalid texture path");
+		exit_error(map, "Invalid texture path");
 	}
 	*path_ptr = trimmed;
-
 	fd = open(*path_ptr, O_RDONLY);
-	if(fd < 0 || (!check_extension(*path_ptr, ".xpm")))
+	if (fd < 0 || (!check_extension(*path_ptr, ".xpm")))
 	{
-		free(free_line);
 		exit_error(map, ERR_FILE);
 	}
-
+	close(fd);
 }
 
-static void	parse_color_line(char *line, t_map *map, int *color_ptr, char *free_line)
+static void	parse_color_line(char *line, t_map *map, int *color_ptr)
 {
 	char	*ptr;
 
 	if (*color_ptr != -1)
-	{
-		free(free_line);
 		exit_error(map, "Duplicate color identifier");
-	}
 	
 	ptr = line + 1;
 	ptr = skip_spaces(ptr);
 
 	if (!*ptr)
-	{
-		free(free_line);
 		exit_error(map, "Missing color values");
-	}
-	*color_ptr = parse_rgb(ptr, map, free_line);
+
+	*color_ptr = parse_rgb(ptr, map);
 }
 
 static int	parse_line(char *line, t_map *map)
@@ -64,23 +56,23 @@ static int	parse_line(char *line, t_map *map)
 	ptr = skip_spaces(line);
 	if (!*ptr || *ptr == '\n')
 		return (0);
+		
 	if (ft_strncmp(ptr, "NO", 2) == 0)
-		parse_path(ptr, map, &map->no_path, line);
+		parse_path(ptr, map, &map->no_path);
 	else if (ft_strncmp(ptr, "SO", 2) == 0)
-		parse_path(ptr, map, &map->so_path, line);
+		parse_path(ptr, map, &map->so_path);
 	else if (ft_strncmp(ptr, "WE", 2) == 0)
-		parse_path(ptr, map, &map->we_path, line);
+		parse_path(ptr, map, &map->we_path);
 	else if (ft_strncmp(ptr, "EA", 2) == 0)
-		parse_path(ptr, map, &map->ea_path, line);
+		parse_path(ptr, map, &map->ea_path);
 	else if (ft_strncmp(ptr, "F", 1) == 0)
-		parse_color_line(ptr, map, &map->floor_color, line);
+		parse_color_line(ptr, map, &map->floor_color);
 	else if (ft_strncmp(ptr, "C", 1) == 0)
-		parse_color_line(ptr, map, &map->ceil_color, line);
-	else if (*ptr == '1')
+		parse_color_line(ptr, map, &map->ceil_color);
+	else if (*ptr == '1' || *ptr == '0')
 		return (1);
 	else
 	{
-		free(line);
 		exit_error(map, "Invalid identifier");
 	}
 	return (0);
@@ -88,29 +80,20 @@ static int	parse_line(char *line, t_map *map)
 
 void	parse_file(char *file_path, t_map *map)
 {
-	char	*line;
+	int	i;
 
-	map->fd = open(file_path, O_RDONLY);
-	if (map->fd < 0)
-		exit_error(map, ERR_FILE);
-	while (1)
+	read_whole_file(file_path, map);
+	i = 0;
+	while (map->file_content[i])
 	{
-		line = get_next_line(map->fd);
-		if (!line)
+		if (parse_line(map->file_content[i], map))
 			break ;
-		if (parse_line(line, map))
-		{
-			free(line);
-			break ;
-		}
-		free(line);
+		i++;
 	}
-	close(map->fd);
-	map->fd = -1;
 	if (!map->no_path || !map->so_path || !map->we_path || !map->ea_path
 		|| map->floor_color == -1 || map->ceil_color == -1)
 	{
 		exit_error(map, "Missing texture or color identifiers");
 	}
-	read_map(file_path, map);
+	process_map_content(map, i);
 }

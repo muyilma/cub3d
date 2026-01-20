@@ -25,22 +25,13 @@ void    free_map(t_map *map)
         free(map->ea_path);
     if (map->map)
         free_arr(map->map);
+    if (map->file_content)
+        free_arr(map->file_content);
 }
 
 void    exit_error(t_map *map, char *msg)
 {
-    char *line;
-
     free_map(map);
-    if (map && map->fd != -1)
-    {
-        while ((line = get_next_line(map->fd)))
-        {
-           free(line);
-        }
-        close(map->fd);
-        map->fd = -1;
-    }
     ft_putstr_fd("Error\n", 2);
     ft_putstr_fd(msg, 2);
     ft_putstr_fd("\n", 2);
