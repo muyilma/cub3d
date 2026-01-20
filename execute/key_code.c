@@ -2,22 +2,38 @@
 #include "../minilibx-linux/mlx.h"
 #include <math.h>
 
-static void	player_move(t_map *m, double move_x, double move_y)
-{
-	double	new_x;
-	double	new_y;
 
-	new_x = m->player.x + move_x;
-	new_y = m->player.y + move_y;
-	if (m->map[(int)m->player.y][(int)new_x] != '1')
-		m->player.x = new_x;
-	if (m->map[(int)new_y][(int)m->player.x] != '1')
-		m->player.y = new_y;
+static void player_move(t_map *m, double move_x, double move_y)
+{
+    double new_x;
+    double new_y;
+
+    new_x = m->player.x + move_x;
+    new_y = m->player.y + move_y;
+    if (move_x > 0)
+    {
+        if (m->map[(int)m->player.y][(int)(new_x + 0.2)] != '1')
+            m->player.x = new_x;
+    }
+    else if (move_x < 0)
+    {
+        if (m->map[(int)m->player.y][(int)(new_x - 0.2)] != '1')
+            m->player.x = new_x;
+    }
+    if (move_y > 0)
+    {
+        if (m->map[(int)(new_y + 0.2)][(int)m->player.x] != '1')
+            m->player.y = new_y;
+    }
+    else if (move_y < 0)
+    {
+        if (m->map[(int)(new_y - 0.2)][(int)m->player.x] != '1')
+            m->player.y = new_y;
+    }
 }
 
 static void	redraw(t_map *m)
 {
-	ft_memset(m->img.addr, 0, 1080 * m->img.line_len);
 	raycast(m);
 	mlx_put_image_to_window(m->init, m->win, m->img.img, 0, 0);
 }
