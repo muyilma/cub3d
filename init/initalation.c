@@ -15,6 +15,14 @@ void    init_map(t_map *map)
     map->p_x = -1;
     map->p_y = -1;
     map->p_dir = 0;
+    map->init = NULL;
+    map->win = NULL;
+    map->img.img = NULL;
+    map->tex[0].img = NULL;
+    map->tex[1].img = NULL; 
+    map->tex[2].img = NULL;
+    map->tex[3].img = NULL;
+                
 }
 
 
