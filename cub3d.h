@@ -56,6 +56,7 @@ typedef struct s_player
 
 typedef struct s_map
 {
+    char	**file_content;
     char    **map;
     int     width;
     int     height;
@@ -68,7 +69,6 @@ typedef struct s_map
     int     p_x;
     int     p_y;
     char    p_dir;
-    int     fd;
     void *init;
     void *win;
     t_player player;
@@ -91,15 +91,15 @@ void    parse_file(char *file_path, t_map *map);
 void    exit_error(t_map *map, char *msg);
 void    free_map(t_map *map);
 int     check_extension(char *file, char *str);
-int	parse_rgb(char *line, t_map *map, char *free_line);
+int	parse_rgb(char *line, t_map *map);
 void    read_map(char *file_path, t_map *map);
 void    check_map_validity(t_map *map);
 void	free_arr(char **arr);
-int     is_map_line(char *line);
 char	**create_map_copy(t_map *map);
 void	flood_fill(t_map *map, char **cpymap, int x, int y);
 void	cpymap_control(t_map *map, char **cpymap);
-int check_disconnected_map(t_map *map, int player_y, int player_x);
 void open_window(t_map *data);
+char	**read_whole_file(char *file_path, t_map *map);
+void	process_map_content(t_map *map, int i);
 
 #endif

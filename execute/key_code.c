@@ -44,7 +44,7 @@ int	key_code(int keycode, t_map *m)
 	double	move_speed;
 	double	rot_speed;
 
-	move_speed = 0.1;
+	move_speed = 1;
 	rot_speed = 0.05;
 	if (keycode == 65307)
 		close_window(m);

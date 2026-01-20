@@ -1,6 +1,6 @@
-NAME=cub3d
+NAME=cub3D
 
-SRCS= cub3d.c src/utils.c gnl/get_next_line.c src/parse.c src/clean.c src/parse_utils.c src/map_read.c \
+SRCS= cub3d.c src/utils.c gnl/get_next_line.c src/parse.c src/clean.c src/parse_utils.c src/map_read.c src/read_file.c\
 src/check_map.c src/flood_fill.c execute/mlx.c init/initalation.c execute/key_code.c execute/raycast.c execute/textures.c
 
 CFLAGS=-Wall -Wextra -Werror -g
@@ -34,6 +34,6 @@ run: all
 	./$(NAME) map/map.cub
 
 leak: all
-	valgrind --leak-check=full --show-leak-kinds=all ./cub3d map/map.cub 
+	valgrind --leak-check=full --show-leak-kinds=all ./cub3D map/map.cub 
 
 .PHONY: all clean fclean re

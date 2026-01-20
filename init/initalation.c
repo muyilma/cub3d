@@ -15,7 +15,6 @@ void    init_map(t_map *map)
     map->p_x = -1;
     map->p_y = -1;
     map->p_dir = 0;
-	map->fd =-1;
 }
 
 
