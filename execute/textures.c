@@ -57,14 +57,14 @@ void	clamp_wall_bounds(int *start, int *end, double step, double *tex_pos)
 		*end = 1079;
 }
 
-void	draw_wall(t_map *d, int x, int start, int end, double dist)
+void	draw_wall(t_map *d, int x, int start, int end)
 {
 	int		y;
 	double	step;
 	double	tex_pos;
 
 	d->t_id = get_wall_dir(d);
-	d->t_x = get_wall_x(d, d->t_id, dist);
+	d->t_x = get_wall_x(d, d->t_id, d->dist);
 	step = 1.0 * d->tex[d->t_id].height / (end - start);
 	tex_pos = (start - 1080 / 2 + (end - start) / 2) * step;
 	clamp_wall_bounds(&start, &end, step, &tex_pos);
@@ -76,7 +76,8 @@ void	draw_wall(t_map *d, int x, int start, int end, double dist)
 	{
 		d->t_y = (int)tex_pos & (d->tex[d->t_id].height - 1);
 		tex_pos += step;
-		my_mlx_pixel_put(&d->img, x, y, get_tex_color(&d->tex[d->t_id], d->t_x, d->t_y));
+		my_mlx_pixel_put(&d->img, x, y, get_tex_color(&d->tex[d->t_id], d->t_x,
+				d->t_y));
 	}
 	while (y < 1080)
 		my_mlx_pixel_put(&d->img, x, y++, d->floor_color);

@@ -77,7 +77,6 @@ static void	init_dda(t_map *d)
 void	raycast(t_map *d)
 {
 	int		x;
-	double	dist;
 	int		h;
 
 	x = 0;
@@ -88,9 +87,9 @@ void	raycast(t_map *d)
 		d->r.ray_y = d->player.dir_y + d->player.plane_y * d->r.camera_x;
 		init_dda(d);
 		perform_dda(d);
-		dist = calc_wall_dist(d);
-		h = 1080 / dist;
-		draw_wall(d, x, -h / 2 + 1080 / 2, h / 2 + 1080 / 2, dist);
+		d->dist = calc_wall_dist(d);
+		h = 1080 / d->dist;
+		draw_wall(d, x, -h / 2 + 1080 / 2, h / 2 + 1080 / 2);
 		x++;
 	}
 }

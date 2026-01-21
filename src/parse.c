@@ -14,7 +14,6 @@ static void	parse_path(char *line, t_map *map, char **path_ptr)
 
 	if (*path_ptr != NULL)
 		exit_error(map, "Duplicate texture identifier");
-	
 	line += 2;
 	line = skip_spaces(line);
 	trimmed = ft_strtrim(line, " \n\t");
@@ -39,13 +38,10 @@ static void	parse_color_line(char *line, t_map *map, int *color_ptr)
 
 	if (*color_ptr != -1)
 		exit_error(map, "Duplicate color identifier");
-	
 	ptr = line + 1;
 	ptr = skip_spaces(ptr);
-
 	if (!*ptr)
 		exit_error(map, "Missing color values");
-
 	*color_ptr = parse_rgb(ptr, map);
 }
 
@@ -56,7 +52,6 @@ static int	parse_line(char *line, t_map *map)
 	ptr = skip_spaces(line);
 	if (!*ptr || *ptr == '\n')
 		return (0);
-		
 	if (ft_strncmp(ptr, "NO", 2) == 0)
 		parse_path(ptr, map, &map->no_path);
 	else if (ft_strncmp(ptr, "SO", 2) == 0)

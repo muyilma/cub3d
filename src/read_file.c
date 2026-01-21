@@ -27,7 +27,7 @@ char	**read_whole_file(char *file_path, t_map *map)
 	int		fd;
 	int		i;
 	int		line_count;
-	char    *gnl_flush;
+	char	*gnl_flush;
 
 	line_count = count_lines(file_path);
 	if (line_count < 0)
@@ -42,10 +42,10 @@ char	**read_whole_file(char *file_path, t_map *map)
 	while (i < line_count)
 		map->file_content[i++] = get_next_line(fd);
 	map->file_content[i] = NULL;
-	gnl_flush = get_next_line(fd); 
-    if (gnl_flush)
+	gnl_flush = get_next_line(fd);
+	if (gnl_flush)
 	{
-        free(gnl_flush);
+		free(gnl_flush);
 	}
 	close(fd);
 	return (map->file_content);

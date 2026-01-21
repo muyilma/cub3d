@@ -2,34 +2,33 @@
 #include "../minilibx-linux/mlx.h"
 #include <math.h>
 
-
-static void player_move(t_map *m, double move_x, double move_y)
+static void	player_move(t_map *m, double move_x, double move_y)
 {
-    double new_x;
-    double new_y;
+	double	new_x;
+	double	new_y;
 
-    new_x = m->player.x + move_x;
-    new_y = m->player.y + move_y;
-    if (move_x > 0)
-    {
-        if (m->map[(int)m->player.y][(int)(new_x + 0.2)] != '1')
-            m->player.x = new_x;
-    }
-    else if (move_x < 0)
-    {
-        if (m->map[(int)m->player.y][(int)(new_x - 0.2)] != '1')
-            m->player.x = new_x;
-    }
-    if (move_y > 0)
-    {
-        if (m->map[(int)(new_y + 0.2)][(int)m->player.x] != '1')
-            m->player.y = new_y;
-    }
-    else if (move_y < 0)
-    {
-        if (m->map[(int)(new_y - 0.2)][(int)m->player.x] != '1')
-            m->player.y = new_y;
-    }
+	new_x = m->player.x + move_x;
+	new_y = m->player.y + move_y;
+	if (move_x > 0)
+	{
+		if (m->map[(int)m->player.y][(int)(new_x + 0.2)] != '1')
+			m->player.x = new_x;
+	}
+	else if (move_x < 0)
+	{
+		if (m->map[(int)m->player.y][(int)(new_x - 0.2)] != '1')
+			m->player.x = new_x;
+	}
+	if (move_y > 0)
+	{
+		if (m->map[(int)(new_y + 0.2)][(int)m->player.x] != '1')
+			m->player.y = new_y;
+	}
+	else if (move_y < 0)
+	{
+		if (m->map[(int)(new_y - 0.2)][(int)m->player.x] != '1')
+			m->player.y = new_y;
+	}
 }
 
 static void	redraw(t_map *m)
@@ -47,8 +46,7 @@ static void	rotate_player(t_map *m, double angle)
 	old_plane_x = m->player.plane_x;
 	m->player.dir_x = m->player.dir_x * cos(angle) - m->player.dir_y
 		* sin(angle);
-	m->player.dir_y = old_dir_x * sin(angle) + m->player.dir_y
-		* cos(angle);
+	m->player.dir_y = old_dir_x * sin(angle) + m->player.dir_y * cos(angle);
 	m->player.plane_x = m->player.plane_x * cos(angle) - m->player.plane_y
 		* sin(angle);
 	m->player.plane_y = old_plane_x * sin(angle) + m->player.plane_y
@@ -65,17 +63,17 @@ int	key_code(int keycode, t_map *m)
 	if (keycode == 65307)
 		close_window(m);
 	if (keycode == 119 || keycode == 65362)
-		player_move(m, m->player.dir_x * move_speed,
-			m->player.dir_y * move_speed);
+		player_move(m, m->player.dir_x * move_speed, m->player.dir_y
+			* move_speed);
 	if (keycode == 115 || keycode == 65364)
-		player_move(m, -m->player.dir_x * move_speed,
-			-m->player.dir_y * move_speed);
+		player_move(m, -m->player.dir_x * move_speed, -m->player.dir_y
+			* move_speed);
 	if (keycode == 97)
-		player_move(m, -m->player.plane_x * move_speed,
-			-m->player.plane_y * move_speed);
+		player_move(m, -m->player.plane_x * move_speed, -m->player.plane_y
+			* move_speed);
 	if (keycode == 100)
-		player_move(m, m->player.plane_x * move_speed,
-			m->player.plane_y * move_speed);
+		player_move(m, m->player.plane_x * move_speed, m->player.plane_y
+			* move_speed);
 	if (keycode == 65361)
 		rotate_player(m, -rot_speed);
 	if (keycode == 65363)

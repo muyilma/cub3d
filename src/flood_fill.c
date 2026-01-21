@@ -51,7 +51,8 @@ void	cpymap_control(t_map *map, char **cpymap)
 		x = 0;
 		while (cpymap[y][x])
 		{
-			if (cpymap[y][x] != 'F' && cpymap[y][x] != ' ' && cpymap[y][x] != '\n')
+			if (cpymap[y][x] != 'F' && cpymap[y][x] != ' '
+				&& cpymap[y][x] != '\n')
 			{
 				free_arr(cpymap);
 				exit_error(map, "Multiple map errors");
