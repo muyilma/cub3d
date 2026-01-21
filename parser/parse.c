@@ -1,4 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/21 12:38:29 by omgorege          #+#    #+#             */
+/*   Updated: 2026/01/21 12:54:18 by omgorege         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
+#include "../libft/libft.h"
+#include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 static char	*skip_spaces(char *line)
 {

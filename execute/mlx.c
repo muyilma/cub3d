@@ -1,5 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/21 12:38:58 by omgorege          #+#    #+#             */
+/*   Updated: 2026/01/21 12:53:15 by omgorege         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 #include "../minilibx-linux/mlx.h"
+#include "../libft/libft.h"
+#include <stdlib.h>
 
 void	load_texture(t_map *d, int i, char *path)
 {

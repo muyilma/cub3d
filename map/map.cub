@@ -1,13 +1,13 @@
-NO textures/EA.xpm
-SO textures/NO.xpm
-WE textures/SO.xpm
-EA textures/WE.xpm
+NO textures/doom3.xpm
+SO textures/doom1.xpm
+WE textures/doom3.xpm
+EA textures/doom1.xpm
 
 F 164,169,20
 C 153,204,255
 
 11111111
-100S0001
+100E0001
 10000001
 10100001
 10000001

@@ -1,7 +1,7 @@
 NAME=cub3D
 
-SRCS= main.c src/utils.c gnl/get_next_line.c src/parse.c src/clean.c src/parse_utils.c src/map_read.c src/read_file.c\
-src/check_map.c src/flood_fill.c execute/mlx.c init/initalation.c execute/key_code.c execute/raycast.c execute/textures.c
+SRCS= main.c parser/utils.c gnl/get_next_line.c parser/parse.c parser/clean.c parser/parse_utils.c parser/map_read.c parser/read_file.c\
+parser/check_map.c parser/flood_fill.c execute/mlx.c init/initalation.c execute/key_code.c execute/raycast.c execute/textures.c
 
 CFLAGS=-Wall -Wextra -Werror -g
 

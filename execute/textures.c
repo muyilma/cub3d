@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   textures.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/21 12:39:03 by omgorege          #+#    #+#             */
+/*   Updated: 2026/01/21 12:42:38 by omgorege         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
-#include "../minilibx-linux/mlx.h"
 #include <math.h>
 
 int	get_wall_dir(t_map *d)
@@ -7,16 +18,16 @@ int	get_wall_dir(t_map *d)
 	if (d->r.side == 0)
 	{
 		if (d->r.ray_x > 0)
-			return (TEX_WE);
-		else
 			return (TEX_EA);
+		else
+			return (TEX_WE);
 	}
 	else
 	{
 		if (d->r.ray_y > 0)
-			return (TEX_NO);
-		else
 			return (TEX_SO);
+		else
+			return (TEX_NO);
 	}
 }
 
@@ -31,9 +42,9 @@ double	get_wall_x(t_map *d, int tex_id, double dist)
 		wall_x = d->player.x + dist * d->r.ray_x;
 	wall_x -= floor(wall_x);
 	tex_x = (int)(wall_x * d->tex[tex_id].width);
-	if (d->r.side == 0 && d->r.ray_x > 0)
+	if (d->r.side == 0 && d->r.ray_x < 0)
 		tex_x = d->tex[tex_id].width - tex_x - 1;
-	if (d->r.side == 1 && d->r.ray_y < 0)
+	if (d->r.side == 1 && d->r.ray_y > 0)
 		tex_x = d->tex[tex_id].width - tex_x - 1;
 	return (tex_x);
 }

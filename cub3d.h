@@ -1,12 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/21 12:38:48 by omgorege          #+#    #+#             */
+/*   Updated: 2026/01/21 13:03:29 by omgorege         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
-
-# include "gnl/get_next_line.h"
-# include "libft/libft.h"
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
 
 # define ERR_INV "Invalid identifier or line found in file"
 # define ERR_USAGE "Usage: ./cub3D <map_path.cub>"
@@ -39,9 +44,9 @@ typedef struct s_img
 	char		*addr;
 	int			bpp;
 	int			line_len;
-	int			endian;
-	int			width;
-	int			height;
+	int			endian;//bunu sil
+	int			width;// sil
+	int			height;//sil
 }				t_img;
 
 typedef struct s_player
@@ -88,7 +93,6 @@ int				key_code(int keycode, t_map *m);
 void			init_map(t_map *map);
 int				close_window(t_map *data);
 t_player		init_player(t_map map);
-void			init_map(t_map *map);
 void			check_args(int argc, char **argv);
 void			parse_file(char *file_path, t_map *map);
 void			exit_error(t_map *map, char *msg);

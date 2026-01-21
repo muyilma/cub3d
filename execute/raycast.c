@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycast.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/21 12:39:00 by omgorege          #+#    #+#             */
+/*   Updated: 2026/01/21 12:43:11 by omgorege         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
-#include "../minilibx-linux/mlx.h"
 #include <math.h>
 
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
