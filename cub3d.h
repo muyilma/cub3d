@@ -44,9 +44,9 @@ typedef struct s_img
 	char		*addr;
 	int			bpp;
 	int			line_len;
-	int			endian;//bunu sil
-	int			width;// sil
-	int			height;//sil
+	int			endian;
+	int			width;
+	int			height;
 }				t_img;
 
 typedef struct s_player

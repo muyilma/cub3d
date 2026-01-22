@@ -26,11 +26,9 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 double	calc_wall_dist(t_map *d)
 {
 	if (d->r.side == 0)
-		return ((d->r.map_x - d->player.x + (1 - d->r.step_x) / 2)
-			/ d->r.ray_x);
+		return (d->r.side_x - d->r.delta_x);
 	else
-		return ((d->r.map_y - d->player.y + (1 - d->r.step_y) / 2)
-			/ d->r.ray_y);
+		return (d->r.side_y - d->r.delta_y);
 }
 
 static void	perform_dda(t_map *d)
@@ -100,7 +98,7 @@ void	raycast(t_map *d)
 		perform_dda(d);
 		d->dist = calc_wall_dist(d);
 		h = 1080 / d->dist;
-		draw_wall(d, x, -h / 2 + 1080 / 2, h / 2 + 1080 / 2);
+		draw_wall(d, x,  1080 / 2 - h / 2, h / 2 + 1080 / 2);
 		x++;
 	}
 }
