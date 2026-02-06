@@ -85,8 +85,8 @@ static void	init_dda(t_map *d)
 
 void	raycast(t_map *d)
 {
-	int		x;
-	int		h;
+	int	x;
+	int	h;
 
 	x = 0;
 	while (x < 1920)
@@ -98,7 +98,7 @@ void	raycast(t_map *d)
 		perform_dda(d);
 		d->dist = calc_wall_dist(d);
 		h = 1080 / d->dist;
-		draw_wall(d, x,  1080 / 2 - h / 2, h / 2 + 1080 / 2);
+		draw_wall(d, x, 1080 / 2 - h / 2, h / 2 + 1080 / 2);
 		x++;
 	}
 }

@@ -18,14 +18,16 @@
 
 int	check_extension(char *file, char *str)
 {
-	size_t	len;
+	char	*re;
+	int		flen;
 
-	len = ft_strlen(file);
-	if (len < 4)
+	flen = ft_strlen(file);
+	re = ft_strrchr(file, '.');
+	if (!re || flen <= 4 || ft_strncmp(re, str, 5) != 0)
 		return (0);
-	if (ft_strncmp(file + len - 4, str, 4) == 0)
-		return (1);
-	return (0);
+	if (file[flen - 5] == '/')
+		return (0);
+	return (1);
 }
 
 void	check_args(int argc, char **argv)
@@ -43,4 +45,19 @@ void	check_args(int argc, char **argv)
 		exit(1);
 	}
 	close(fd);
+}
+
+int	get_digit_len(char *str)
+{
+	int	len;
+
+	len = 0;
+	while (*str == ' ' || *str == '\t' || *str == '\n')
+		str++;
+	while (ft_isdigit(*str))
+	{
+		len++;
+		str++;
+	}
+	return (len);
 }

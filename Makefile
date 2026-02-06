@@ -31,9 +31,9 @@ re: fclean all
 
 run: all
 	clear
-	./$(NAME) map/map.cub
+	./$(NAME) map/pass/big.cub
 
 leak: all
-	valgrind --leak-check=full --show-leak-kinds=all ./cub3D map/map.cub 
+	valgrind --leak-check=full --show-leak-kinds=all ./cub3D map/pass/big.cub 
 
 .PHONY: all clean fclean re

@@ -85,7 +85,7 @@ void	draw_wall(t_map *d, int x, int start, int end)
 	y = start - 1;
 	while (++y <= end)
 	{
-		d->t_y = (int)tex_pos %	d->tex[d->t_id].height;
+		d->t_y = (int)tex_pos % d->tex[d->t_id].height;
 		tex_pos += step;
 		my_mlx_pixel_put(&d->img, x, y, get_tex_color(&d->tex[d->t_id], d->t_x,
 				d->t_y));

@@ -36,14 +36,14 @@ static void	check_surroundings(t_map *map, int x, int y)
 	if (!ft_strchr("0NSEW", map->map[y][x]))
 		return ;
 	if (y == 0 || !map->map[y + 1] || x == 0 || !map->map[y][x + 1])
-		exit_error(map, "Map is not closed (0 is on the edge)");
+		exit_error(map, "Map is not closed");
 	if (x >= (int)ft_strlen(map->map[y - 1]) || x >= (int)ft_strlen(map->map[y
 				+ 1]))
 		exit_error(map, "Map is not closed (Gap in neighbor line)");
 	if (!ft_strchr("01NSEW", map->map[y][x + 1]) || !ft_strchr("01NSEW",
 			map->map[y][x - 1]) || !ft_strchr("01NSEW", map->map[y + 1][x])
 		|| !ft_strchr("01NSEW", map->map[y - 1][x]))
-		exit_error(map, "Map is not closed (Invalid neighbor around 0)");
+		exit_error(map, "Map is not closed");
 }
 
 static void	scan_map(t_map *map)

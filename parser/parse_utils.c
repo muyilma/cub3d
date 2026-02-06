@@ -30,13 +30,17 @@ static int	is_numeric(char *str)
 	i = 0;
 	while (str[i] == ' ' || str[i] == '\t')
 		i++;
-	if (!str[i] || str[0] == '\n')
+	if (!str[i])
 		return (0);
-	if (str[0] == '0' && (ft_isdigit(str[1])))
+	if (str[i] == '0' && ft_isdigit(str[i + 1]))
 		return (0);
+	if (!ft_isdigit(str[i]))
+		return (0);
+	while (ft_isdigit(str[i]))
+		i++;
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]) && str[i] != '\n')
+		if (str[i] != ' ' && str[i] != '\t' && str[i] != '\n')
 			return (0);
 		i++;
 	}
@@ -68,8 +72,8 @@ static int	char_to_int_rgb(char **rgb, t_map *map)
 {
 	int	c[3];
 
-	if ((ft_strlen(rgb[0]) > 3) && (ft_strlen(rgb[1]) > 3)
-		&& (ft_strlen(rgb[2]) > 3))
+	if ((get_digit_len(rgb[0]) > 3) || (get_digit_len(rgb[1]) > 3)
+		|| (get_digit_len(rgb[2]) > 3))
 	{
 		free_arr(rgb);
 		exit_error(map, "Invalid color format (Must be R,G,B)");
@@ -98,7 +102,7 @@ int	parse_rgb(char *line, t_map *map)
 	if (!is_numeric(rgb[0]) || !is_numeric(rgb[1]) || !is_numeric(rgb[2]))
 	{
 		free_arr(rgb);
-		exit_error(map, "Color values must be numeric");
+		exit_error(map, "There is an error in the color values.");
 	}
 	return (char_to_int_rgb(rgb, map));
 }

@@ -15,7 +15,7 @@
 
 # define ERR_INV "Invalid identifier or line found in file"
 # define ERR_USAGE "Usage: ./cub3D <map_path.cub>"
-# define ERR_EXT "Invalid file extension. Must be .cub"
+# define ERR_EXT "Invalid file extension."
 # define ERR_FILE "Could not open file"
 # define TEX_NO 0
 # define TEX_SO 1
@@ -107,5 +107,6 @@ void			cpymap_control(t_map *map, char **cpymap);
 void			open_window(t_map *data);
 char			**read_whole_file(char *file_path, t_map *map);
 void			process_map_content(t_map *map, int i);
+int				get_digit_len(char *str);
 
 #endif
